@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Daily Desk · আমার দিনলিপি</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Atma:wght@400;600&family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf6ee;--card:#fff;--tx:#2b2a33;--mut:#7a7686;--ac:#e0603a;--ac2:#2f7d6d;--ln:#e8e0d0;--sh:0 2px 10px #0001}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161c;--card:#22212a;--tx:#f0eee8;--mut:#a09cae;--ac:#ff8a5f;--ac2:#5cc4ae;--ln:#37353f;--sh:0 2px 10px #0006}}
+:root[data-theme="dark"]{--bg:#17161c;--card:#22212a;--tx:#f0eee8;--mut:#a09cae;--ac:#ff8a5f;--ac2:#5cc4ae;--ln:#37353f;--sh:0 2px 10px #0006}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Hind Siliguri",system-ui,sans-serif;line-height:1.5}
+main{max-width:860px;margin:auto;padding:12px 14px 80px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+h1{font:700 1.5rem Kalam,"Atma",cursive;margin:6px 0}
+#clk{font:700 1.6rem Kalam,monospace;color:var(--ac)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button,.btn{border:1px solid var(--ln);background:var(--card);color:var(--tx);border-radius:20px;padding:7px 14px;font:inherit;cursor:pointer;white-space:nowrap;transition:.15s}
+nav button.on,.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.btn:hover,nav button:hover{transform:translateY(-1px)}
+.btn.g{background:var(--ac2);color:#fff;border-color:var(--ac2)}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:14px;margin:10px 0;box-shadow:var(--sh)}
+.card h2{margin:0 0 8px;font-size:1.05rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:7px 10px;max-width:100%}
+.grow{flex:1;min-width:120px}
+.mut{color:var(--mut);font-size:.85rem}
+.big{font:700 2.4rem Kalam,monospace;text-align:center}
+.tl{display:flex;gap:10px;padding:8px 10px;border-left:4px solid var(--c,var(--ln));margin:6px 0;background:var(--bg);border-radius:0 10px 10px 0;align-items:center}
+.tl.now{box-shadow:0 0 0 2px var(--ac);animation:pl 2s infinite}
+.tl.done{opacity:.5;text-decoration:line-through}
+@keyframes pl{50%{box-shadow:0 0 0 5px #e0603a33}}
+.bar{height:14px;border-radius:7px;background:var(--c);min-width:3px;transition:width .5s}
+.pg{height:10px;background:var(--ln);border-radius:6px;overflow:hidden}.pg i{display:block;height:100%;background:var(--ac2);transition:width .5s}
+.tk{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--ln)}
+.tk.d span.t{text-decoration:line-through;opacity:.5}
+.chip{font-size:.72rem;padding:1px 8px;border-radius:10px;background:var(--c);color:#fff}
+#paper{width:100%;min-height:340px;font-size:1.35rem;line-height:2rem;border-radius:12px;background:repeating-linear-gradient(transparent 0 calc(2rem - 1px),#9ab 0 2rem),#fffdf5;color:#2b2a33;border:1px solid var(--ln);padding:4px 14px}
+.f-kalam{font-family:Kalam,"Atma",cursive}.f-atma{font-family:Atma,Kalam,cursive}.f-hind{font-family:"Hind Siliguri",sans-serif}
+#ring{position:fixed;inset:0;background:#000a;display:none;place-items:center;z-index:50}
+#ring div{background:var(--card);padding:26px;border-radius:20px;text-align:center;max-width:90%;animation:sh .4s infinite}
+@keyframes sh{25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+#pa{display:none}
+@media (max-width:640px){nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--ln);box-shadow:0 -2px 10px #0002}nav button{padding:9px 12px;font-size:.85rem}main{padding-bottom:110px}input,select,textarea{font-size:16px}}
+@media print{body>*:not(#pa){display:none!important}#pa{display:block!important;color:#000;background:#fff;padding:20px}#pa .ln{background:repeating-linear-gradient(transparent 0 calc(2rem - 1px),#9ab 0 2rem);line-height:2rem;font-size:1.3rem;white-space:pre-wrap;min-height:70vh}}
+#mic{position:fixed;right:12px;bottom:92px;z-index:20;display:flex;gap:6px}#mic button{border:0;border-radius:50%;width:52px;height:52px;font-size:1.4rem;background:var(--ac);color:#fff;box-shadow:var(--sh);cursor:pointer}#mic button+button{width:40px;height:40px;font-size:.8rem;background:var(--ac2);align-self:flex-end}
+.ban{background:linear-gradient(120deg,var(--ac),var(--ac2));color:#fff;border-radius:16px;padding:12px 14px;margin:10px 0}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:8px}.gal img{width:100%;height:110px;object-fit:cover;border-radius:10px;cursor:zoom-in}
+table{width:100%;border-collapse:collapse}td{padding:5px;border-bottom:1px dashed var(--ln)}
+</style></head><body>
+<main>
+<header><h1>📒 My Daily Desk · আমার দিনলিপি</h1><div id="clk">--:--</div></header>
+<nav id="nav"></nav>
+<div id="view"></div>
+</main>
+<div id="ring"><div><div style="font-size:3rem">⏰</div><h2 id="rmsg"></h2><button class="btn p" onclick="stopRing()">OK, I’m on it! · ঠিক আছে</button></div></div>
+<div id="mic"><button onclick="mic()" title="Voice assistant">🎤</button><button id="vlb" onclick="vl=vl=='en-US'?'bn-BD':'en-US';this.textContent=vl=='en-US'?'EN':'বাং'">EN</button></div><div id="pa"></div>
+<script>
+const $=id=>document.getElementById(id);
+const CATS={Course:"#6a5acd",Film:"#e0603a",Teaching:"#2f7d6d",Shop:"#c28a00",Social:"#d6336c",Other:"#6b7280",Rest:"#38a3a5"};
+const TABS=[["today","Today · আজ"],["tasks","Tasks · কাজ"],["timer","Timer · সময়"],["diary","Diary · ডায়েরি"],["stats","Stats · হিসাব"],["money","Money · টাকা"],["set","Settings · সেটিং"]];
+const TIPS=["Lip-sync: animate the vowels’ jaw shapes first (A, O, U, M/B/P), then add tongue and teeth later.","Record yourself saying the line on your phone and study your own mouth in a mirror frame by frame.","Hit the key sounds only: lip sync works best on strong consonants (M, B, P, F) and open vowels. Don’t animate every letter.","Open the mouth 1–2 frames BEFORE the sound is heard so it feels natural.","Add head tilts, blinks and eyebrow moves. Good lip-sync is mostly face acting, not just the mouth.","Finish a rough blocking version first. Polish only after the timing feels right.","Study 1 minute of a favorite film scene every day and note where the mouth shapes change."];
+const DEF={tasks:[{id:1,n:"Lip-sync assignment",c:"Course",m:90,p:3,d:0},{id:2,n:"Work on our film",c:"Film",m:60,p:2,d:0},{id:3,n:"Post on Facebook / Instagram",c:"Social",m:20,p:1,d:0}],plan:{},log:{},rest:{},diary:{},alarms:[],wt:null,rt:null,tab:"today",money:{pin:null,tx:[],budget:0},goals:[],dues:[],prac:[],imgs:[],posts:[],shop:[],stock:[],set:{free:"13:30",end:"22:00",madS:"09:00",madE:"13:00",shop:false,shopS:"17:00",shopE:"20:00",goal:"Finish my animation course",aim:"Make our film",restGoal:60}};
+let S;try{S=Object.assign({},DEF,JSON.parse(localStorage.getItem("daydesk")||"{}"))}catch(e){S=JSON.parse(JSON.stringify(DEF))}
+S.set=Object.assign({},DEF.set,S.set);
+const save=()=>{try{localStorage.setItem("daydesk",JSON.stringify(S))}catch(e){try{toast("⚠ Storage full – delete old images or download a backup")}catch(x){}}};
+const td=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const toM=t=>{const[a,b]=t.split(":");return +a*60+ +b};
+const nowM=()=>{const d=new Date();return d.getHours()*60+d.getMinutes()};
+const hm=m=>String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+const dur=s=>{s=Math.round(s);return Math.floor(s/3600)+"h "+String(Math.floor(s%3600/60)).padStart(2,"0")+"m"};
+const clock=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(Math.floor(s%60)).padStart(2,"0");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const catOpts=sel=>Object.keys(CATS).filter(c=>c!="Rest").map(c=>`<option ${c==sel?"selected":""}>${c}</option>`).join("");
+function dayLog(d){return S.log[d]||(S.log[d]={})}
+function addLog(c,s){const l=dayLog(td());l[c]=(l[c]||0)+s;save()}
+function workElapsed(){return S.wt?(Date.now()-S.wt.start)/1000:0}
+function totals(d){const l=Object.assign({},S.log[d]||{});if(d==td()&&S.wt)l[S.wt.cat]=(l[S.wt.cat]||0)+workElapsed();return l}
+function sum(o){return Object.values(o).reduce((a,b)=>a+b,0)}
+
+/* ---------- alarms ---------- */
+let ac,ringT;
+function beep(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();[0,.35,.7,1.05].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=t%.7?880:660;o.connect(g);g.connect(ac.destination);g.gain.setValueAtTime(.25,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+t+.3);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.3)})}catch(e){}}
+function ring(msg){$("rmsg").textContent=msg;$("ring").style.display="grid";beep();clearInterval(ringT);ringT=setInterval(beep,4000);try{navigator.vibrate&&navigator.vibrate([300,150,300])}catch(e){}try{if(window.Notification&&Notification.permission=="granted")new Notification("⏰ "+msg)}catch(e){}}
+function stopRing(){$("ring").style.display="none";clearInterval(ringT)}
+const fired=new Set();
+function checkAlarms(){const d=td(),m=nowM();
+ (S.plan[d]||[]).forEach((p,i)=>{const k=d+"p"+i;if(p.s==m&&!fired.has(k)){fired.add(k);ring(p.rest?"Rest time! · বিশ্রামের সময়":"Time to start: "+p.n)}});
+ S.alarms.forEach((a,i)=>{const k=d+"a"+i;if(a.on&&toM(a.t)==m&&!fired.has(k)){fired.add(k);ring(a.l||"Alarm")}});}
+
+/* ---------- auto planner ---------- */
+function autoPlan(){const st=S.set,busy=[{s:toM(st.madS),e:toM(st.madE)}];if(st.shop)busy.push({s:toM(st.shopS),e:toM(st.shopE)});busy.sort((a,b)=>a.s-b.s);
+ let t=Math.max(toM(st.free),nowM()),end=toM(st.end),plan=[];
+ const skip=x=>{busy.forEach(b=>{if(x>=b.s&&x<b.e)x=b.e});return x};
+ const items=S.tasks.filter(x=>!x.d).sort((a,b)=>b.p-a.p);
+ for(const k of items){let left=k.m;
+  while(left>0){t=skip(t);const nb=busy.find(b=>b.s>t);let d=Math.min(left,(nb?nb.s:end)-t,end-t);if(d<10)break;
+   plan.push({id:k.id,n:k.n,c:k.c,s:t,e:t+d});t+=d;left-=d;
+   if(t+10<=end&&left<=0){plan.push({n:"Rest",c:"Rest",s:t,e:t+10,rest:1});t+=10}
+   if(d<left&&nb&&t>=nb.s)continue;if(left>0&&t>=end)break}
+  if(t>=end)break}
+ S.plan[td()]=plan;fired.clear();save();render()}
+
+/* ---------- views ---------- */
+function nav(){$("nav").innerHTML=TABS.map(([k,l])=>`<button class="${S.tab==k?"on":""}" onclick="go('${k}')">${l}</button>`).join("")}
+function go(t){if(t!="money")mu=false;S.tab=t;save();render()}
+function render(){nav();$("view").innerHTML=V[S.tab]();if(S.tab=="diary")diaryInit();tick()}
+const V={};
+V.today=()=>{const d=td(),tot=totals(d),plan=S.plan[d]||[],nm=nowM(),done=S.tasks.filter(t=>t.d).length,all=S.tasks.length||1;
+ const tip=TIPS[new Date().getDate()%TIPS.length];
+ return `<div class="card"><h2>🎯 My goals · আমার লক্ষ্য</h2><div>⭐ Main goal: <b>${esc(S.set.goal)}</b></div><div>🎬 Right now: <b>${esc(S.set.aim)}</b></div><div class="mut" style="margin-top:6px">🔥 Streak: <b>${streak()} day(s)</b> · Tasks done ${done}/${S.tasks.length}</div><div class="pg"><i style="width:${done/all*100}%"></i></div>
+ <div class="row" style="margin-top:8px"><input class="grow" placeholder="⚡ Quick add task… press Enter" onkeydown="if(event.key=='Enter'&&this.value.trim()){S.tasks.push({id:Date.now(),n:this.value.trim(),c:'Other',m:30,p:2,d:0});save();render()}"></div><div class="mut" style="margin-top:8px">Worked today: <b id="wtot">${dur(sum(tot))}</b> · Rest: <b id="rtot"></b></div></div>
+ <div class="card"><h2>🗓 Today’s plan · আজকের রুটিন</h2><div class="row"><button class="btn p" onclick="autoPlan()">✨ Auto-set my time</button><span class="mut">Fits your tasks into free time, with rests. ${esc(S.set.madS)}–${esc(S.set.madE)} is kept for teaching.</span></div>
+ <div class="tl" style="--c:${CATS.Teaching}"><b>${S.set.madS}–${S.set.madE}</b> Madrasha teaching · মাদ্রাসা</div>
+ ${plan.map((p,i)=>`<div class="tl ${p.e<=nm?"done":""} ${p.s<=nm&&nm<p.e?"now":""}" style="--c:${CATS[p.c]}"><b>${hm(p.s)}–${hm(p.e)}</b><span class="grow">${esc(p.n)}</span>${p.rest?"":`<button class="btn g" onclick="startWork('${p.c}')">▶</button>`}</div>`).join("")||'<p class="mut">No plan yet. Add tasks, then press Auto-set.</p>'}</div>
+ <div class="card"><h2>💡 Animation tip of the day</h2><div class="f-kalam" style="font-size:1.15rem">${tip}</div></div>`};
+V.tasks=()=>`<div class="card"><h2>📝 Add a task · নতুন কাজ</h2><div class="row"><input id="tn" class="grow" placeholder="Task / কাজের নাম"><select id="tc">${catOpts("Course")}</select><input id="tm" type="number" min="5" step="5" value="45" style="width:80px" title="minutes"><select id="tp"><option value="3">High</option><option value="2" selected>Medium</option><option value="1">Low</option></select><button class="btn p" onclick="addTask()">Add</button></div></div>
+ <div class="card"><h2>My list</h2>${S.tasks.map(t=>`<div class="tk ${t.d?"d":""}"><input type="checkbox" ${t.d?"checked":""} onchange="togTask(${t.id})"><span class="t grow">${esc(t.n)}</span><span class="chip" style="--c:${CATS[t.c]}">${t.c}</span><span class="mut">${t.m}m</span><button class="btn" onclick="delTask(${t.id})">✕</button></div>`).join("")||'<p class="mut">Empty.</p>'}<div class="row" style="margin-top:8px"><button class="btn" onclick="S.tasks=S.tasks.filter(t=>!t.d);save();render()">Clear finished</button><button class="btn" onclick="S.tasks.forEach(t=>t.d=0);save();render()">New day: uncheck all</button></div></div>`;
+function addTask(){const n=$("tn").value.trim();if(!n)return;S.tasks.push({id:Date.now(),n,c:$("tc").value,m:+$("tm").value||30,p:+$("tp").value,d:0});save();render()}
+function togTask(id){const t=S.tasks.find(x=>x.id==id);t.d=t.d?0:1;save();render();if(t.d)burst()}
+function delTask(id){S.tasks=S.tasks.filter(t=>t.id!=id);save();render()}
+
+V.timer=()=>`<div class="card"><h2>⏱ Work timer · কাজের সময়</h2><div class="big" id="wclk">00:00</div><div class="row" style="justify-content:center"><select id="wc">${catOpts(S.wt?S.wt.cat:"Course")}</select><button class="btn g" id="wb" onclick="toggleWork()"></button></div><p class="mut" style="text-align:center">Time is saved to today’s hours when you stop.</p></div>
+ <div class="card"><h2>😌 Rest timer · বিশ্রাম</h2><div class="big" id="rclk">00:00</div><div class="row" style="justify-content:center">${[5,10,15,20,30].map(m=>`<button class="btn" onclick="startRest(${m})">${m} min</button>`).join("")}<button class="btn" onclick="stopRest()">Stop</button></div><p class="mut" style="text-align:center" id="rinfo"></p></div>`;
+function startWork(c){if(S.wt)stopWork();S.wt={cat:c,start:Date.now()};save();if(S.tab=="timer")render();else go("timer")}
+function stopWork(){if(!S.wt)return;addLog(S.wt.cat,workElapsed());S.wt=null;save()}
+function toggleWork(){if(S.wt){stopWork()}else{S.wt={cat:$("wc").value,start:Date.now()};save()}render()}
+function startRest(m){stopRest(true);S.rt={start:Date.now(),len:m*60};save();tick()}
+function stopRest(q){if(S.rt){const e=Math.min((Date.now()-S.rt.start)/1000,S.rt.len);S.rest[td()]=(S.rest[td()]||0)+e;S.rt=null;save()}if(!q)tick()}
+
+V.diary=()=>`<div class="card"><h2>📖 My diary · আমার ডায়েরি</h2><div class="row"><input type="date" id="dd" value="${td()}" onchange="diaryInit()"><select id="dm" onchange="diarySave()"><option>😊</option><option>😐</option><option>😢</option><option>😡</option><option>🤩</option><option>😴</option></select><select id="df" onchange="diarySave();diaryInit(1)"><option value="kalam">Handwriting (English)</option><option value="atma">হাতের লেখা (বাংলা)</option><option value="hind">Clean · সাধারণ</option></select><button class="btn" onclick="diaryTpl()">Prompts</button><button class="btn p" onclick="printDiary()">🖨 Print</button></div>
+ <textarea id="paper" oninput="diarySave()" placeholder="Write here in Bangla or English… এখানে লিখুন…"></textarea><div class="mut" id="dw"></div></div>
+ <div class="card"><h2>Past pages</h2>${Object.keys(S.diary).sort().reverse().slice(0,30).map(d=>`<button class="btn" style="margin:3px" onclick="$('dd').value='${d}';diaryInit()">${d} ${S.diary[d].m||""}</button>`).join("")||'<span class="mut">None yet.</span>'}</div>`;
+function diaryInit(f){const e=S.diary[$("dd").value]||{};if(!f){$("dm").value=e.m||"😊";$("df").value=e.f||"kalam";$("paper").value=e.t||""}$("paper").className="f-"+$("df").value;$("paper").id="paper";dw()}
+function dw(){const t=$("paper").value.trim();$("dw").textContent=(t?t.split(/\s+/).length:0)+" words · saved automatically"}
+function diarySave(){const d=$("dd").value;S.diary[d]={t:$("paper").value,m:$("dm").value,f:$("df").value};save();dw()}
+function diaryTpl(){const p=$("paper");p.value+=(p.value?"\n\n":"")+"Today I finished: \nI struggled with: \nTomorrow I will: \nI’m grateful for: \n";diarySave()}
+function printDiary(){const d=$("dd").value;diarySave();const e=S.diary[d]||{};$("pa").innerHTML=`<h2 class="f-${e.f||"kalam"}">${d} ${e.m||""} · My Diary</h2><div class="ln f-${e.f||"kalam"}">${esc(e.t||"")}</div>`;window.print()}
+function printDay(){const d=td(),t=totals(d);$("pa").innerHTML=`<h2>Daily report · ${d}</h2><p>${Object.entries(t).map(([c,s])=>c+": "+dur(s)).join(" | ")||"No work logged"}<br>Rest: ${dur(S.rest[d]||0)}</p><h3>Plan</h3>${(S.plan[d]||[]).map(p=>`<div>${hm(p.s)}–${hm(p.e)} ${esc(p.n)}</div>`).join("")}<h3>Tasks</h3>${S.tasks.map(x=>`<div>${x.d?"☑":"☐"} ${esc(x.n)}</div>`).join("")}<h3>Diary</h3><div class="ln f-${(S.diary[d]||{}).f||"kalam"}">${esc((S.diary[d]||{}).t||"")}</div>`;window.print()}
+
+V.stats=()=>{const d=td(),t=totals(d),mx=Math.max(1,...Object.values(t));
+ const days=[...Array(7)].map((_,i)=>{const x=new Date();x.setDate(x.getDate()-6+i);const k=x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");return[k,sum(totals(k))]});const m7=Math.max(1,...days.map(x=>x[1]));
+ return `<div class="card"><h2>Today by activity</h2>${Object.entries(t).map(([c,s])=>`<div class="row"><span style="width:80px">${c}</span><div class="grow"><div class="bar" style="--c:${CATS[c]};width:${s/mx*100}%"></div></div><b>${dur(s)}</b></div>`).join("")||'<p class="mut">Nothing logged yet. Use the Timer tab.</p>'}<p>Total: <b>${dur(sum(t))}</b> · Rest: <b>${dur(S.rest[d]||0)}</b> / ${S.set.restGoal} min goal</p></div>
+ <div class="card"><h2>Last 7 days</h2>${days.map(([k,s])=>`<div class="row"><span style="width:80px" class="mut">${k.slice(5)}</span><div class="grow"><div class="bar" style="--c:var(--ac2);width:${s/m7*100}%"></div></div><span>${dur(s)}</span></div>`).join("")}</div><button class="btn p" onclick="printDay()">🖨 Print today’s report</button>`};
+
+V.set=()=>{const s=S.set,f=(k,l,t="time")=>`<label class="row"><span style="width:150px">${l}</span><input type="${t}" value="${s[k]}" onchange="S.set['${k}']=this.value;save()"></label>`;
+ return `<div class="card"><h2>🎯 Goals</h2>${f("goal","Main goal","text")}${f("aim","Right-now aim","text")}${f("restGoal","Rest goal (min)","number")}</div>
+ <div class="card"><h2>🕘 Daily schedule</h2>${f("madS","Teaching starts")}${f("madE","Teaching ends")}${f("free","Free time starts")}${f("end","Stop working at")}<label class="row"><span style="width:150px">Shop hours?</span><input type="checkbox" ${s.shop?"checked":""} onchange="S.set.shop=this.checked;save()"></label>${f("shopS","Shop from")}${f("shopE","Shop until")}</div>
+ <div class="card"><h2>⏰ Custom alarms</h2><div class="row"><input type="time" id="at" value="20:00"><input id="al" class="grow" placeholder="Label e.g. Post on Facebook"><button class="btn p" onclick="addAlarm()">Add</button></div>${S.alarms.map((a,i)=>`<div class="tk"><input type="checkbox" ${a.on?"checked":""} onchange="S.alarms[${i}].on=this.checked;save()"><b>${a.t}</b><span class="grow">${esc(a.l)}</span><button class="btn" onclick="S.alarms.splice(${i},1);save();render()">✕</button></div>`).join("")}
+ <p class="mut">Alarms ring while this page is open (keep the tab open, volume on). Plan items also ring at their start time.</p><div class="row"><button class="btn" onclick="askNotif()">Enable notifications</button><button class="btn" onclick="ring('Test alarm')">Test alarm</button></div></div>
+ <div class="card"><h2>💾 Backup · Look</h2><div class="row"><button class="btn" onclick="exp()">Download backup</button><label class="btn">Restore<input type="file" hidden accept=".json" onchange="imp(this)"></label><button class="btn" onclick="theme()">🌗 Light/Dark</button></div><p class="mut">Data is saved in this browser only, so download a backup now and then.</p></div>`};
+function addAlarm(){S.alarms.push({t:$("at").value,l:$("al").value,on:true});save();render()}
+function askNotif(){try{Notification.requestPermission()}catch(e){}}
+function exp(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="daily-desk-backup.json";a.click()}
+function imp(i){const r=new FileReader();r.onload=()=>{try{S=Object.assign({},DEF,JSON.parse(r.result));save();render()}catch(e){alert("Bad file")}};r.readAsText(i.files[0])}
+function theme(){const r=document.documentElement,d=r.dataset.theme=="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark"}
+
+/* ---------- extras ---------- */
+function dk(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
+function streak(){let n=0;const x=new Date();for(let i=0;i<400;i++){const k=dk(x);const on=sum(S.log[k]||{})>0||((S.diary[k]||{}).t||"").trim()||(k==td()&&S.wt);if(on)n++;else if(i>0)break;x.setDate(x.getDate()-1)}return n}
+function burst(){for(let i=0;i<14;i++){const e=document.createElement("div");e.textContent=["🎉","⭐","✨","💪"][i%4];e.style.cssText=`position:fixed;left:${30+Math.random()*40}vw;top:60vh;font-size:1.6rem;z-index:60;transition:1s;pointer-events:none`;document.body.appendChild(e);setTimeout(()=>{e.style.transform=`translate(${(Math.random()-.5)*220}px,-${150+Math.random()*150}px)`;e.style.opacity=0},20);setTimeout(()=>e.remove(),1100)}try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}}
+
+/* ---------- money (PIN) ---------- */
+let mu=false,mHide=false;
+const MC=["Madrasha salary","Shop sales","Other income","Food","Transport","Shop stock","Course / Internet","Family","Other"];
+const fm=n=>mHide?"৳ ••••":"৳ "+Math.round(n).toLocaleString();
+async function hp(p){try{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("dd:"+p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}catch(e){return btoa(p)}}
+async function setPin(){const p=$("p1").value;if(p.length<4){alert("PIN must be 4+ digits");return}S.money.pin=await hp(p);mu=true;save();render()}
+async function unlock(){if(await hp($("p1").value)==S.money.pin){mu=true;render()}else{$("pe").textContent="Wrong PIN · ভুল পিন"}}
+V.money=()=>{const M=S.money;
+ if(!M.pin)return `<div class="card"><h2>🔒 Create a PIN · পিন দিন</h2><p class="mut">Your money page will stay hidden behind this PIN.</p><div class="row"><input id="p1" type="password" inputmode="numeric" placeholder="New PIN (4+ digits)"><button class="btn p" onclick="setPin()">Save PIN</button></div></div>`;
+ if(!mu)return `<div class="card"><h2>🔒 Money is locked · তালাবদ্ধ</h2><div class="row"><input id="p1" type="password" inputmode="numeric" placeholder="Enter PIN" onkeydown="if(event.key=='Enter')unlock()"><button class="btn p" onclick="unlock()">Unlock</button></div><p class="mut" id="pe"></p></div>`;
+ const mo=td().slice(0,7),all=M.tx,mt=all.filter(x=>x.d.startsWith(mo));
+ const inn=a=>a.filter(x=>x.t=="in").reduce((s,x)=>s+x.a,0),out=a=>a.filter(x=>x.t=="out").reduce((s,x)=>s+x.a,0);
+ const cat={};mt.filter(x=>x.t=="out").forEach(x=>cat[x.c]=(cat[x.c]||0)+x.a);const mx=Math.max(1,...Object.values(cat)),bud=M.budget,sp=out(mt);
+ return `<div class="card"><h2>💰 Money · টাকার হিসাব</h2><div class="row"><button class="btn" onclick="mHide=!mHide;render()">👁 Hide/Show</button><button class="btn" onclick="mu=false;render()">🔒 Lock</button><button class="btn" onclick="if(confirm('Change PIN?')){S.money.pin=null;save();render()}">Change PIN</button></div>
+ <div class="row" style="margin-top:8px"><div class="grow"><div class="mut">Balance</div><div class="big" style="text-align:left">${fm(inn(all)-out(all))}</div></div><div><div class="mut">This month in</div><b style="color:var(--ac2)">${fm(inn(mt))}</b></div><div><div class="mut">Spent</div><b style="color:var(--ac)">${fm(sp)}</b></div></div>
+ ${bud?`<div class="pg" style="margin-top:8px"><i style="width:${Math.min(100,sp/bud*100)}%;background:${sp>bud?"var(--ac)":"var(--ac2)"}"></i></div><div class="mut">Budget ${fm(bud)} · left ${fm(bud-sp)}</div>`:""}
+ <label class="row mut" style="margin-top:6px">Monthly budget ৳ <input type="number" value="${bud||""}" style="width:120px" onchange="S.money.budget=+this.value;save();render()"></label></div>
+ <div class="card"><h2>➕ Add · যোগ করুন</h2><div class="row"><select id="mty"><option value="out">Expense · খরচ</option><option value="in">Income · আয়</option></select><input id="mam" type="number" inputmode="decimal" placeholder="Amount ৳" style="width:110px"><select id="mca">${MC.map(c=>`<option>${c}</option>`).join("")}</select><input id="mno" class="grow" placeholder="Note"><button class="btn p" onclick="addTx()">Add</button></div></div>
+ <div class="card"><h2>Spending this month</h2>${Object.entries(cat).map(([c,s])=>`<div class="row"><span style="width:120px">${c}</span><div class="grow"><div class="bar" style="--c:var(--ac);width:${s/mx*100}%"></div></div><b>${fm(s)}</b></div>`).join("")||'<p class="mut">No expenses yet.</p>'}</div>
+ <div class="card"><h2>Recent</h2>${mt.slice().reverse().slice(0,25).map(x=>`<div class="tk"><span class="mut">${x.d.slice(5)}</span><span class="grow">${esc(x.c)} <span class="mut">${esc(x.n||"")}</span></span><b style="color:${x.t=="in"?"var(--ac2)":"var(--ac)"}">${x.t=="in"?"+":"−"}${fm(x.a)}</b><button class="btn" onclick="S.money.tx=S.money.tx.filter(y=>y.id!=${x.id});save();render()">✕</button></div>`).join("")||'<p class="mut">Nothing yet.</p>'}</div>`};
+function addTx(){const a=+$("mam").value;if(!(a>0))return;S.money.tx.push({id:Date.now(),d:td(),t:$("mty").value,c:$("mca").value,a,n:$("mno").value});save();render()}
+
+/* ---------- v3: goals, create, shop, report, voice ---------- */
+TABS.length=0;TABS.push(["today","Today · আজ"],["tasks","Tasks · কাজ"],["goals","Goals · লক্ষ্য"],["timer","Timer · সময়"],["diary","Diary · ডায়েরি"],["create","Create · সৃষ্টি"],["shop","Shop · দোকান"],["money","Money · টাকা"],["stats","Report · রিপোর্ট"],["set","Settings · সেটিং"]);
+function toast(t){let e=$("toast");if(!e){e=document.createElement("div");e.id="toast";e.style.cssText="position:fixed;left:50%;transform:translateX(-50%);bottom:160px;background:#000d;color:#fff;padding:10px 16px;border-radius:20px;z-index:80;max-width:90%;transition:.3s";document.body.appendChild(e)}e.textContent=t;e.style.opacity=1;clearTimeout(e.t);e.t=setTimeout(()=>e.style.opacity=0,2800)}
+const dl=d=>Math.ceil((new Date(d)-new Date(td()))/864e5);
+function tg(k,id){const x=S[k].find(y=>y.id==id);x.done=x.done?0:1;save();render();if(x.done)burst()}
+function rm(k,id){S[k]=S[k].filter(y=>y.id!=id);save();render()}
+const due=x=>{if(!x.by)return"";const n=dl(x.by);return `<span class="chip" style="--c:${x.done?"#6b7280":n<0?"#c0392b":n<=2?"#e67e22":"#2f7d6d"}">${x.done?"done":n<0?"Overdue!":n==0?"Today!":n+" days"}</span>`};
+const lst=(k,sort)=>(sort?S[k].slice().sort((a,b)=>(a.by||"9")>(b.by||"9")?1:-1):S[k]).map(x=>`<div class="tk ${x.done?"d":""}"><input type="checkbox" ${x.done?"checked":""} onchange="tg('${k}',${x.id})"><span class="t grow">${x.p?x.p+": ":""}${esc(x.t)}</span>${due(x)}<button class="btn" onclick="rm('${k}',${x.id})">✕</button></div>`).join("")||'<p class="mut">Nothing yet.</p>';
+function add(k,t,by,p){t=t.trim();if(!t)return;S[k].push({id:Date.now(),t,by,p,done:0});save();render()}
+function nextDue(){const h=new Date().getHours(),g=h<12?"Good morning ☀️ সুপ্রভাত":h<17?"Good afternoon 🌤 শুভ অপরাহ্ন":"Good evening 🌙 শুভ সন্ধ্যা";const p=[...S.dues,...S.goals].filter(x=>x.by&&!x.done).sort((a,b)=>a.by>b.by?1:-1)[0];return `<div class="ban"><b>${g}</b><br>${p?`⏳ Next deadline: <b>${esc(p.t)}</b> — ${dl(p.by)<0?"overdue!":dl(p.by)==0?"today!":dl(p.by)+" day(s) left"}`:"Add a deadline in Goals to stay on track."} · 🔥 ${streak()}-day streak</div>`}
+const _t=V.today;V.today=()=>nextDue()+_t();
+V.goals=()=>`<div class="card"><h2>🎯 Weekly goals · সাপ্তাহিক লক্ষ্য</h2><div class="row"><input id="gt" class="grow" placeholder="e.g. Finish lip-sync assignment"><input id="gb" type="date"><button class="btn p" onclick="add('goals',$('gt').value,$('gb').value)">Add</button></div>${lst("goals",1)}</div><div class="card"><h2>📚 Course assignments · অ্যাসাইনমেন্ট</h2><div class="row"><input id="at2" class="grow" placeholder="Assignment name"><input id="ad" type="date"><button class="btn p" onclick="add('dues',$('at2').value,$('ad').value)">Add</button></div>${lst("dues",1)}</div>`;
+const PRAC=["Bouncing ball","Lip-sync","Walk cycle","Face acting","Pose drawing","Film work"];
+V.create=()=>{const d=td(),pm=S.prac.filter(x=>x.d==d).reduce((s,x)=>s+x.m,0);
+ return `<div class="card"><h2>🎞 Animation practice log</h2><div class="row"><select id="pe2">${PRAC.map(x=>`<option>${x}</option>`).join("")}</select><input id="pm" type="number" value="30" style="width:80px"><input id="pn" class="grow" placeholder="What did you learn?"><button class="btn p" onclick="addP()">Log</button></div><p class="mut">Today: <b>${pm} min</b> / 30 min goal</p><div class="pg"><i style="width:${Math.min(100,pm/30*100)}%"></i></div>${S.prac.slice(-5).reverse().map(x=>`<div class="tk"><span class="mut">${x.d.slice(5)}</span><b>${x.e}</b><span class="grow mut">${esc(x.n)}</span>${x.m}m</div>`).join("")}</div>
+ <div class="card"><h2>🖼 Images · ছবি</h2><div class="row"><select id="ic"><option>Progress</option><option>Storyboard</option><option>Reference</option><option>Film still</option></select><input id="icap" class="grow" placeholder="Caption"><label class="btn p">📷 Upload<input type="file" accept="image/*" multiple hidden onchange="upImg(this)"></label></div><div class="gal">${S.imgs.slice().reverse().map(i=>`<div><img src="${i.src}" onclick="zoom(${i.id})"><div class="mut">${i.c} · ${i.d.slice(5)}<br>${esc(i.cap||"")} <span style="cursor:pointer" onclick="rm('imgs',${i.id})">✕</span></div></div>`).join("")||'<p class="mut">Upload progress shots, storyboards, film stills.</p>'}</div></div>
+ <div class="card"><h2>📱 Facebook / Instagram planner</h2><div class="row"><select id="sp"><option>Facebook</option><option>Instagram</option></select><input id="st2" class="grow" placeholder="Post idea"><input id="sd" type="date" value="${d}"><button class="btn p" onclick="add('posts',$('st2').value,$('sd').value,$('sp').value)">Plan</button></div>${lst("posts",1)}<p class="mut">Ideas: work-in-progress clip, before/after, lesson learned, film behind-the-scenes.</p></div>`};
+function addP(){S.prac.push({id:Date.now(),d:td(),e:$("pe2").value,m:+$("pm").value||0,n:$("pn").value});save();render();burst()}
+function upImg(inp){[...inp.files].forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);S.imgs.push({id:Date.now()+Math.floor(Math.random()*1e6),d:td(),c:$("ic").value,cap:$("icap").value,src:c.toDataURL("image/jpeg",.7)});save();render()};im.src=r.result};r.readAsDataURL(f)})}
+function zoom(id){const o=document.createElement("div");o.style.cssText="position:fixed;inset:0;background:#000d;z-index:70;display:grid;place-items:center";o.innerHTML=`<img src="${S.imgs.find(i=>i.id==id).src}" style="max-width:95%;max-height:90%">`;o.onclick=()=>o.remove();document.body.appendChild(o)}
+V.shop=()=>{const d=td(),mo=d.slice(0,7),f=a=>a.reduce((s,x)=>s+x.a,0);return `<div class="card"><h2>🏪 Shop · দোকান</h2><div class="row"><div><div class="mut">Today</div><div class="big">৳ ${f(S.shop.filter(x=>x.d==d))}</div></div><div><div class="mut">This month</div><b>৳ ${f(S.shop.filter(x=>x.d.startsWith(mo)))}</b></div></div><div class="row" style="margin-top:8px"><input id="sa" type="number" placeholder="Sales ৳" style="width:110px"><input id="sn" class="grow" placeholder="Note"><button class="btn p" onclick="addS()">Add sale</button></div>${S.shop.slice(-8).reverse().map(x=>`<div class="tk"><span class="mut">${x.d.slice(5)}</span><span class="grow">${esc(x.n||"")}</span><b>৳ ${x.a}</b><button class="btn" onclick="rm('shop',${x.id})">✕</button></div>`).join("")}</div><div class="card"><h2>📦 Stock to buy</h2><div class="row"><input id="sk" class="grow" placeholder="Item to restock"><button class="btn p" onclick="add('stock',$('sk').value)">Add</button></div>${lst("stock")}</div>`};
+function addS(){const a=+$("sa").value;if(!(a>0))return;S.shop.push({id:Date.now(),d:td(),a,n:$("sn").value});save();render()}
+/* report */
+function sumDays(f,a,b){let s=0;const x=new Date();x.setDate(x.getDate()-a);for(let i=a;i<=b;i++){s+=f(dk(x));x.setDate(x.getDate()-1)}return s}
+const pmin=k=>S.prac.filter(x=>x.d==k).reduce((s,x)=>s+x.m,0),hasD=k=>((S.diary[k]||{}).t||"").trim()?1:0;
+function reportView(){const w=(f,a,b)=>sumDays(f,a,b),H=k=>sum(totals(k))/3600;
+ const rows=[["Work hours",w(H,0,6),w(H,7,13),v=>v.toFixed(1)+"h"],["Practice",w(pmin,0,6),w(pmin,7,13),v=>v+"m"],["Diary days",w(hasD,0,6),w(hasD,7,13),v=>v+"/7"]];
+ const allH=Object.keys(S.log).reduce((s,k)=>s+sum(S.log[k]),0),xp=Math.round(allH/360+S.goals.filter(g=>g.done).length*20+S.dues.filter(g=>g.done).length*30+S.prac.reduce((s,x)=>s+x.m,0)/6+Object.keys(S.diary).filter(hasD).length*5),lv=Math.floor(Math.sqrt(xp/20))+1,nx=lv*lv*20,pv=(lv-1)*(lv-1)*20;
+ const msg=rows[0][1]>=rows[0][2]?"Great! You worked as much or more than last week. Keep the rhythm 💪":"You worked less than last week. Pick one small task and start a 25-minute timer now.";
+ return `<div class="card"><h2>📈 Progress report · অগ্রগতি</h2><div class="row"><b style="font-size:1.4rem">⭐ Level ${lv}</b><span class="mut">${xp} XP · next at ${nx}</span></div><div class="pg"><i style="width:${(xp-pv)/(nx-pv)*100}%"></i></div><table><tr><td></td><td><b>This week</b></td><td class="mut">Last week</td></tr>${rows.map(([l,a,b,f])=>`<tr><td>${l} ${a>b?"▲":a<b?"▼":"＝"}</td><td><b>${f(a)}</b></td><td class="mut">${f(b)}</td></tr>`).join("")}<tr><td>Goals done</td><td><b>${S.goals.filter(g=>g.done).length}/${S.goals.length}</b></td><td></td></tr><tr><td>Assignments done</td><td><b>${S.dues.filter(g=>g.done).length}/${S.dues.length}</b></td><td></td></tr><tr><td>Streak</td><td><b>🔥 ${streak()} days</b></td><td></td></tr></table><p>${msg}</p><button class="btn p" onclick="printMonth()">🖨 Print monthly review</button></div>`}
+const _st=V.stats;V.stats=()=>reportView()+_st();
+function printMonth(){const mo=td().slice(0,7),tc={};Object.keys(S.log).filter(k=>k.startsWith(mo)).forEach(k=>{for(const c in S.log[k])tc[c]=(tc[c]||0)+S.log[k][c]});const pm=S.prac.filter(x=>x.d.startsWith(mo)).reduce((s,x)=>s+x.m,0),im=S.imgs.filter(i=>i.d.startsWith(mo)).slice(-8);
+ $("pa").innerHTML=`<h2>Monthly review · ${mo}</h2><p>Total work: <b>${dur(sum(tc))}</b> — ${Object.entries(tc).map(([c,s])=>c+" "+dur(s)).join(" | ")}</p><p>Practice: ${pm} min · Goals done: ${S.goals.filter(g=>g.done).length} · Assignments done: ${S.dues.filter(g=>g.done).length}</p><div>${im.map(i=>`<img src="${i.src}" style="width:30%;margin:1%">`).join("")}</div><h3>Diary highlights</h3>${Object.keys(S.diary).filter(k=>k.startsWith(mo)).sort().map(k=>`<p><b>${k}</b> ${S.diary[k].m||""} ${esc((S.diary[k].t||"").slice(0,200))}</p>`).join("")}`;window.print()}
+/* voice */
+let vl="en-US";
+function say(t){toast(t);try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;speechSynthesis.speak(u)}catch(e){}}
+function mic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("Voice not supported in this browser");return}const r=new SR();r.lang=vl;r.onresult=e=>voice(e.results[0][0].transcript);r.onerror=()=>toast("Didn’t catch that");r.start();toast("🎤 Listening… ("+vl+")")}
+function voice(t){const s=t.toLowerCase().trim();let m;const map={today:"today",tasks:"tasks",goals:"goals",timer:"timer",diary:"diary",create:"create",shop:"shop",money:"money",report:"stats",settings:"set"};
+ if(m=s.match(/^(?:open|go to) (\w+)/)){map[m[1]]?go(map[m[1]]):say("Which page?")}
+ else if(S.tab=="diary"&&$("paper")){const p=$("paper");p.value+=(p.value?" ":"")+t;diarySave();toast("Added to diary ✍️")}
+ else if(m=s.match(/^add task (.+)/)){S.tasks.push({id:Date.now(),n:m[1],c:"Other",m:30,p:2,d:0});save();render();say("Added "+m[1])}
+ else if(m=s.match(/^start (\w+)/)){const c=Object.keys(CATS).find(x=>x.toLowerCase()==m[1])||"Other";startWork(c);say("Timer started for "+c)}
+ else if(/^stop/.test(s)){stopWork();stopRest();render();say("Stopped")}
+ else if(m=s.match(/rest (\d+)/)){startRest(+m[1]);go("timer");say("Rest for "+m[1]+" minutes")}
+ else if(/plan my day|auto/.test(s)){autoPlan();say("Your plan is ready")}
+ else if(/plan|schedule|next/.test(s)){const p=(S.plan[td()]||[]).filter(x=>!x.rest&&x.e>nowM()).slice(0,3);say(p.length?"Next: "+p.map(x=>hm(x.s)+" "+x.n).join(", "):"No plan yet. Say: plan my day")}
+ else if(/how (much|long)|hours/.test(s)){say("You worked "+dur(sum(totals(td())))+" today")}
+ else say("Try: add task, open diary, start course, stop, rest 10, plan my day")}
+
+/* ---------- tick ---------- */
+function tick(){const d=new Date();$("clk").textContent=d.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});
+ if(S.rt&&(Date.now()-S.rt.start)/1000>=S.rt.len){const l=S.rt.len;stopRest(true);S.rest[td()]=S.rest[td()]||0;ring("Rest over! Back to work · বিশ্রাম শেষ");render()}
+ if(d.getSeconds()==0)checkAlarms();
+ const g=id=>$(id);
+ if(g("wclk")){g("wclk").textContent=S.wt?clock(workElapsed()):"00:00";g("wb").textContent=S.wt?"⏹ Stop ("+S.wt.cat+")":"▶ Start"}
+ if(g("rclk")){const left=S.rt?Math.max(0,S.rt.len-(Date.now()-S.rt.start)/1000):0;g("rclk").textContent=clock(left);g("rinfo").textContent="Rest today: "+dur((S.rest[td()]||0)+(S.rt?S.rt.len-left:0))+" / "+S.set.restGoal+" min goal"}
+ if(g("wtot")){g("wtot").textContent=dur(sum(totals(td())))}
+ if(g("rtot"))g("rtot").textContent=dur(S.rest[td()]||0)}
+setInterval(tick,1000);setInterval(()=>{if(S.tab=="today")render()},60000);
+render();
+</script></body></html>
